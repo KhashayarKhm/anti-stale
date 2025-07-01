@@ -95,12 +95,12 @@ release() {
             fi
         else
             echo "Error: no \"Unreleased\" section in the CHANGELOG.md"
+            exit 1
         fi
 
         git add CHANGELOG.md
         git commit -m "chore(release): prepare $next_version"
         git tag "$next_version"
-        git push origin "$next_version"
 
         read -p "Push to remote now? (Y/n): " -n 1 -r
         echo
