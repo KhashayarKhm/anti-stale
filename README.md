@@ -16,25 +16,22 @@ Stale bots can prematurely close important issues, stifling collaboration and lo
 
 ## Installation
 
+1. Download the executable from [here](https://github.com/KhashayarKhm/anti-stale/releases/latest)
+2. Install with Go 1.20 or higher:
 ```bash
-# Install from source
 go install github.com/yourusername/anti-stale@latest
-
-# Or clone and build
+```
+3. Build from source(need Go 1.20 or higher):
+```bash
 git clone https://github.com/yourusername/anti-stale.git
 cd anti-stale
-go build -o anti-stale .
+bash tools.sh build
+# find the executable in anti-stale/bin directory
 ```
-
-## Prerequisites
-
-- Go 1.20 or higher
-- GitHub Personal Access Token with `repo` permissions
-- Access to the repositories you want to check
 
 ## Configuration
 
-Create a configuration file (default: `anti-stale.json`):
+Create a configuration file (default: `$HOME/anti-stale.json`):
 
 ```json
 {
@@ -80,60 +77,35 @@ anti-stale check
 anti-stale check --reply
 
 # Interactive mode - decide for each issue
-anti-stale check --interactive
-
-# Use custom configuration file
-anti-stale --config /path/to/config.json check
+anti-stale check --reply --interactive
 
 # Use custom stale label
 anti-stale check --label "needs-attention"
 ```
 
-### Examples
-
-```bash
-# Find all stale issues without taking action
-anti-stale check
-
-# Automatically comment on all stale issues
-anti-stale check --reply --msg "This issue is still important"
-
-# Interactive mode with custom message
-anti-stale check -i --msg "Still working on this, please keep open"
-
-# Debug mode with verbose logging
-anti-stale --log-level 0 check --reply
-```
-
-## Global Options
+### Global Options
 
 | Flag | Description | Default |
 |------|-------------|---------|
-| `--config`, `-c` | Path to configuration file | `./config.json` |
+| `--config`, `-c` | Path to configuration file | `$HOME/anti-stale.json` |
 | `--log-level` | Logging level (0=Debug, 1=Info, 2=Warn, 3=Error) | `1` |
 
-## Check Command Options
+### Check Command Options
 
 | Flag | Description | Default |
 |------|-------------|---------|
 | `--reply` | Automatically comment on stale issues/PRs | `false` |
 | `--interactive`, `-i` | Prompt for confirmation on each issue/PR | `false` |
-| `--msg` | Custom message to post as comment | `"This issue is still relevant"` |
-| `--label`, `-l` | Name of the stale label to look for | `"stale"` |
-
-## How it Works
-
-1. **Discovery**: Traverses the `owners` tree in `config.json` to identify repositories and their issues/PRs.
-2. **Filtering**: Checks for open issues/PRs with stale labels using GitHub’s GraphQL API.
-3. **Action**: Reports findings or comments to remove stale status.
-4. **Rate Limiting**: Respects GitHub API limits with configurable delays.
+| `--msg` | Custom message to post as comment | `"not stale"` |
+| `--label`, `-l` | Name of the stale label to look for | `"Stale"` |
 
 ## Best Practices
 
-- **Test first**: Run without `--reply` to preview affected issues/PRs.
-- **Use meaningful messages**: Customize comments to explain why issues should remain open.
-- **Monitor rate limits**: Use appropriate delays to avoid `429` errors.
-- **Be selective**: Use interactive mode (`--interactive`) for sensitive repositories.
+- **Keep the token private and do NOT share with anybody**
+- Only access the repo permission to the token
+- The user agent in the config file should be your github username, this prevents your comment spam
+- Run without `--reply` to preview affected issues/PRs.
+- Use interactive mode (`--interactive`) for sensitive repositories.
 
 ## Contributing
 
@@ -152,6 +124,3 @@ anti-stale --log-level 0 check --reply
 - [ ] Display last update time and stale countdown.
 - [ ] Auto-reopen closed issues when appropriate.
 - [ ] Support for multiple stale labels.
-- [ ] Webhook integration for real-time monitoring.
-- [ ] Dashboard for monitoring stale issue trends.
-- [ ] Slack/Discord notifications.
