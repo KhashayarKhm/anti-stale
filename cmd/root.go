@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	version string
+	version = "development"
 	rootCmd = &cobra.Command{
 		Use:     "anti-stale",
 		Short:   "check and find staled issues or pull requests and send comment to un-stale them",
@@ -27,7 +27,7 @@ func Execute() {
 func init() {
 	cobra.OnInitialize(initConfig)
 
-	rootCmd.PersistentFlags().StringVarP(&configPath, "config", "c", "", "config file (default: anti-stale.json)")
+	rootCmd.PersistentFlags().StringVarP(&configPath, "config", "c", "", "config file (default: $HOME/anti-stale.json)")
 	rootCmd.PersistentFlags().IntVar(&logger.Level, "log-level", 1, "Debug: 0, Info: 1, Warn: 2, Error: 3")
 }
 

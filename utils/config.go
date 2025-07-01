@@ -24,9 +24,9 @@ type Entities struct {
 
 func (c *Config) MustLoad(logger *Log, cfgPath string) {
 	if cfgPath == "" {
-		cwd, err := os.Getwd()
+		home, err := os.UserHomeDir()
 		MustOk(err)
-		cfgPath = path.Join(cwd, "anti-stale.json")
+		cfgPath = path.Join(home, "anti-stale.json")
 		logger.Warning(fmt.Sprintf("config path is empty. use %s", cfgPath))
 	}
 
