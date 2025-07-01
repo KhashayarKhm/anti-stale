@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	version string
+	version = "development"
 	rootCmd = &cobra.Command{
 		Use:     "anti-stale",
 		Short:   "check and find staled issues or pull requests and send comment to un-stale them",
