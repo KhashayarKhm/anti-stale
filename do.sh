@@ -23,14 +23,14 @@ build() {
         return
     fi
     echo "Building for current platform..."
-    local version=$(git describe --tags 2> /dev/null || echo "v0.0.0")
+    local version=$(git describe --tags --abbrev=0 2> /dev/null || echo "v0.0.0")
     go build -o ./bin/anti-stale -ldflags "-X github.com/KhashayarKhm/anti-stale/cmd.version=$version" ./main.go
     echo "Build completed: ./bin/anti-stale"
 }
 
 ### Build the project for all platforms and create checksums
 build_cross_platform() {
-    local version=$(git describe --tags 2> /dev/null || echo "v0.0.0")
+    local version=$(git describe --tags --abbrev=0 2> /dev/null || echo "v0.0.0")
     local ldflags="-X github.com/KhashayarKhm/anti-stale/cmd.version=$version"
 
     # Create build directory
