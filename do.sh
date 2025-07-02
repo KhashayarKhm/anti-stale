@@ -69,7 +69,7 @@ build_cross_platform() {
     sha256sum $windows_amd64_file_path > "$file_path/$windows_amd64_file_name-checksum.txt"
 
     echo "Cross-platform builds completed in ./bin/"
-    ls -la ./bin/
+    ls -lAh ./bin/
 }
 
 ### Release a specific version
